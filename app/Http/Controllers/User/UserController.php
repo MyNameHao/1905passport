@@ -57,6 +57,7 @@ class UserController extends Controller
         $redis_val=md5(time().$info['p_id'].$info['name']);
         Redis::set($redis_key,$redis_val);
         Redis::expire($redis_key,60480);
+        echo '登录成功,您的token为:'.$redis_val;
     }
     public function gettoken(){
         $data=$_POST;
