@@ -92,13 +92,14 @@ class UserController extends Controller
         }
         $info=Puser::where($where)->first();
         if(!$info){
-            $error1=json_encode(['errorcode'=>'0009','errmsg'=>'account或token有误'],JSON_UNESCAPED_UNICODE);
+            $error1=json_encode(['errorcode'=>'0009','errmsg'=>'account或token有误1'],JSON_UNESCAPED_UNICODE);
             echo $error1;exit;
         }
-        $redis_token='token:user:id:'.$info['appid'];
+        $redis_key='token:user:id:'.$info['appid'];
+        $redis_token=Redis::get($redis_key);
         $data_token=$_SERVER['HTTP_TOKEN'];
-        if($redis_token==$data_token){
-            $error1=json_encode(['errorcode'=>'0009','errmsg'=>'account或token有误'],JSON_UNESCAPED_UNICODE);
+        if($redis_token!=$data_token){
+            $error1=json_encode(['errorcode'=>'0009','errmsg'=>'account或token有误2'],JSON_UNESCAPED_UNICODE);
             echo $error1;exit;
         }
         unset($info['p_id']);
