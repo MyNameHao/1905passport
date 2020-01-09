@@ -18,4 +18,4 @@ Route::post('/user/reg','User\UserController@reg');
 Route::post('/user/login','User\UserController@login');
 Route::post('/user/getuserinfo','User\UserController@getuserinfo');
 Route::post('/user/gettoken','User\UserController@gettoken');
-Route::post('/user/github','User\UserController@github');
+Route::post('/user/github','User\UserController@github');//
