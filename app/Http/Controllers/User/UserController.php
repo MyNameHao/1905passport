@@ -53,7 +53,7 @@ class UserController extends Controller
            $error6=json_encode(['errorcode'=>'0006','errmsg'=>'账户或密码有误'],JSON_UNESCAPED_UNICODE);
            echo $error6;exit;
        }
-        $redis_key='token:user:id:'.$info['appid'];
+        $redis_key='token:user:appid:'.$info['appid'].'id:'.$info['p_id'];
         $redis_val=md5(time().$info['p_id'].$info['name']);
         Redis::set($redis_key,$redis_val);
         Redis::expire($redis_key,60480);
@@ -75,7 +75,8 @@ class UserController extends Controller
             $error=json_encode(['errorcode'=>'0007','errmsg'=>'账户或appid有误'],JSON_UNESCAPED_UNICODE);
             echo $error;exit;
         }
-        $redis_key='token:user:id:'.$info['appid'];
+//        $redis_key='token:user:id:'.$info['appid'];
+        $redis_key='token:user:appid:'.$info['appid'].'id:'.$info['p_id'];
         $redis_val=Redis::get($redis_key);
         if($redis_val){
             echo $redis_val;
@@ -96,7 +97,8 @@ class UserController extends Controller
             $error1=json_encode(['errorcode'=>'0009','errmsg'=>'account或token有误1'],JSON_UNESCAPED_UNICODE);
             echo $error1;exit;
         }
-        $redis_key='token:user:id:'.$info['appid'];
+//        $redis_key='token:user:id:'.$info['appid'];
+        $redis_key='token:user:appid:'.$info['appid'].'id:'.$info['p_id'];
         $redis_token=Redis::get($redis_key);
         $data_token=$_SERVER['HTTP_TOKEN'];
         if($redis_token!=$data_token){
