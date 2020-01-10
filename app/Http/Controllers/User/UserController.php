@@ -107,7 +107,7 @@ class UserController extends Controller
         }
         unset($info['p_id']);
         unset($info['password']);
-        echo json_encode($info->toarray());
+        echo json_encode($info->toarray(),JSON_UNESCAPED_UNICODE);
     }
     public function github(){
         $sell='cd /wwwroot/passport && git pull';
