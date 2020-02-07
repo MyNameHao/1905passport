@@ -57,7 +57,9 @@ class UserController extends Controller
         $redis_val=md5(time().$info['p_id'].$info['name']);
         Redis::set($redis_key,$redis_val);
         Redis::expire($redis_key,60480);
-        echo '登录成功,您的token为:'.$redis_val;
+        $success=['errorcode'=>'0000','errmsg'=>'登录成功!','token'=>$redis_val,'id'=>$info['p_id']];
+        echo json_encode($success,JSON_UNESCAPED_UNICODE);
+//        echo '登录成功,您的token为:'.$redis_val;
     }
     public function gettoken(){
         $data=$_POST;
@@ -112,6 +114,33 @@ class UserController extends Controller
     public function github(){
         $sell='cd /wwwroot/passport && git pull';
         shell_exec($sell);
+    }
+    public function auth(){
+        $data=json_decode(file_get_contents('php://input'),true);
+        dd($data);
+        $appid=Puser::where('p_id',$data['id'])->value('appid');
+        $redis_key='token:user:appid:'.$appid.'id:'.$data['id'];
+        $redis_token=Redis::get($redis_key);
+        if($redis_token==$data['token']){
+            return json_encode(['errorcode'=>'0000','errmsg'=>'OK'],JSON_UNESCAPED_UNICODE);
+        }else{
+            $error1=json_encode(['errorcode'=>'0009','errmsg'=>'id或token有误'],JSON_UNESCAPED_UNICODE);
+            return $error1;
+        }
+
+
+    }
+    public function verify(){
+//        dump($_GET);
+        $_val=$_GET['val'];
+        $_key='1905qwe';
+        $signature1=md5($_val.'+'.$_key);
+        $signature2=$_GET['signature'];
+        if($signature1==$signature2){
+            echo '验签通过';
+        }else{
+            echo '验签失败';
+        }
     }
 
 }
