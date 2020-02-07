@@ -153,5 +153,19 @@ class UserController extends Controller
             echo '验签失败';
         }
     }
+    public  function sslencr(){
+        $sign=$_GET['sign'];
+        $data=$_GET['data'];
+        $sign=base64_decode($sign);
+        $path=storage_path('/key/pub.key');
+        $pubkeyid = openssl_pkey_get_public("file://".$path);
+        $ok=openssl_verify($data, $sign, $pubkeyid);
+        if($ok==1){
+            echo '验签成功';
+        }else{
+            echo '验签失败';
+        }
+
+    }
 
 }

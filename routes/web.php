@@ -24,3 +24,4 @@ Route::post('/test/github','User\UserController@github');//
 
 Route::get('/test/verify','User\UserController@verify');//
 Route::post('/test/postsign','User\UserController@postsign');//
+Route::get('/test/sslencr','User\UserController@sslencr');//
