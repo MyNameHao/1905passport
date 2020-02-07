@@ -142,5 +142,16 @@ class UserController extends Controller
             echo '验签失败';
         }
     }
+    public function postsign(){
+        $key='abc123';
+        $sign1=$_POST['sign'];
+        $data_json=$_POST['data'];
+        $sign2=md5($data_json.$key);
+        if($sign1==$sign2){
+            echo '验签成功';
+        }else{
+            echo '验签失败';
+        }
+    }
 
 }

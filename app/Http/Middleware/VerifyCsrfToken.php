@@ -21,6 +21,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
         'user/*',
-        '/test/github'
+        '/test/github',
+        '/test/postsign'
     ];
 }
