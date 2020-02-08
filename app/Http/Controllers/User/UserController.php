@@ -188,5 +188,18 @@ class UserController extends Controller
 
 
     }
+    public function sslpub(){
+        //将接到的加密内容进行base64转码
+        $data=base64_decode($_GET['data']);
+        //获取storage中公钥的路径
+        $paht=storage_path('/key/pub.key');
+        //根据$paht获取公钥的资源
+        $pub=openssl_pkey_get_public ('file://'.$paht);
+        //是用公钥进行解密
+        openssl_public_decrypt($data,$decrype,$pub,OPENSSL_PKCS1_PADDING);
+        //输出解出的密文
+        echo '解到的密文:'.$decrype;
+
+    }
 
 }

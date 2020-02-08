@@ -26,3 +26,4 @@ Route::get('/test/verify','User\UserController@verify');//
 Route::post('/test/postsign','User\UserController@postsign');//
 Route::get('/test/sslencr','User\UserController@sslencr');//
 Route::get('/test/sslcbc','User\UserController@sslcbc');//
+Route::get('/test/sslpub','User\UserController@sslpub');//
