@@ -167,5 +167,26 @@ class UserController extends Controller
         }
 
     }
+    public function sslcbc(){
+        $base_data=$_GET['base'];
+        $data=base64_decode($base_data);
+        $key='19020208';
+        $method='AES-256-CBC';
+        $ivlen=openssl_cipher_iv_length($method);
+        $iv=substr($data,0,$ivlen);
+        $sha2len=32;
+        $hmac = substr($data, $ivlen, $sha2len);
+//        echo $hmac;
+        $ciphertext= substr($data, $ivlen+$sha2len);
+        $original_plaintext = openssl_decrypt($ciphertext,$method, $key, $options=OPENSSL_RAW_DATA, $iv);
+        $hmac2 = hash_hmac('sha256', $ciphertext, $key, $as_binary=true);
+        if($hmac==$hmac2){
+            echo 'ok';
+        }else{
+            echo 'no';
+        }
+
+
+    }
 
 }
